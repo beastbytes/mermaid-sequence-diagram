@@ -23,7 +23,7 @@ test('Rectangle Test', function () {
 
     $message = 'Hello guys';
 
-    $rectangle = (new Rectangle(34, 102, 102))
+    $rectangle = (new Rectangle([34, 102, 102]))
         ->withItem(
             new Note('Note for Alice', Position::Left, $alice),
             new Message($alice, $bob, 'Hi Bob', Arrow::DottedLineCross),
@@ -39,7 +39,7 @@ test('Rectangle Test', function () {
     ;
 
     expect($rectangle->render(''))
-        ->toBe("rect rgb(34, 102, 102)\n"
+        ->toBe("rect rgb(34,102,102)\n"
             . "  note left of _Alice: Note for Alice\n"
             . "  _Alice--x_Bob: Hi Bob\n"
             . "  par Parallel section\n"
@@ -61,7 +61,7 @@ test('Nested Rectangle Test', function () {
 
     $message = 'Hello guys';
 
-    $rectangle = (new Rectangle(34, 102, 102))
+    $rectangle = (new Rectangle([34, 102, 102]))
         ->withItem(
             new Note('Note for Alice', Position::Left, $alice),
             new Message($alice, $bob, 'Hi Bob', Arrow::DottedLineCross),
@@ -74,7 +74,7 @@ test('Nested Rectangle Test', function () {
                         ->withItem(new Message($bob, $dave, $message, Arrow::DottedLineArrowhead))
                 )
             ,
-            (new Rectangle(102, 34, 102))
+            (new Rectangle([102, 34, 102]))
                 ->withItem(
                     new Message($dave, $elizabeth, 'Hi Elizabeth', Arrow::DottedLineCross),
                 )
@@ -82,7 +82,7 @@ test('Nested Rectangle Test', function () {
     ;
 
     expect($rectangle->render(''))
-        ->toBe("rect rgb(34, 102, 102)\n"
+        ->toBe("rect rgb(34,102,102)\n"
             . "  note left of _A: Note for Alice\n"
             . "  _A--x_B: Hi Bob\n"
             . "  par Parallel section\n"
@@ -90,7 +90,7 @@ test('Nested Rectangle Test', function () {
             . "  and And section\n"
             . "    _B-->>_D: Hello guys\n"
             . "  end\n"
-            . "  rect rgb(102, 34, 102)\n"
+            . "  rect rgb(102,34,102)\n"
             . "    _D--x_E: Hi Elizabeth\n"
             . "  end\n"
             . "end"

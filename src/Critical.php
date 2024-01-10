@@ -14,19 +14,4 @@ final class Critical extends BlockContainer
     {
         return ($i === 0 ? 'critical' : 'option');
     }
-
-    /** @internal
-    public function render(string $indentation): string
-    {
-        $output = [];
-
-        foreach ($this->items as $i => $item) {
-            $item->type = ($i === 0 ? 'critical' : 'option');
-            $output[] = $item->render($indentation);
-        }
-
-        $output[] = $indentation . 'end';
-
-        return implode("\n", $output);
-    } */
 }

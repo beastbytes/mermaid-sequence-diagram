@@ -15,21 +15,36 @@ final class Rectangle extends ItemContainer implements ItemInterface
 {
     use RenderItemsTrait;
 
+    private const TYPE = 'rect';
+
     private const MAX = 255;
     private const MIN = 0;
 
-    public function __construct(private readonly int $red, private readonly int $green, private readonly int $blue)
+    /**
+     * @psalm-param list<int> $colour
+     */
+    public function __construct(private readonly array $colour)
     {
-        foreach (['red', 'green', 'blue'] as $colour) {
-            if ($this->$colour < self::MIN || $this->$colour > self::MAX) {
-                throw new InvalidArgumentException(
-                    sprintf(
-                        '`$red`, `$green`, and `$blue` must be integers between %s and %s inclusive',
-                        self::MIN,
-                        self::MAX
-                    )
-                );
+        $err = false;
+
+        if (count($this->colour) !== 3) {
+            $err = true;
+        } else {
+            foreach ($this->colour as $c) {
+                if ($c < self::MIN || $c > self::MAX) {
+                    break;
+                }
             }
+        }
+
+        if ($err) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    '`$colour` must be an array of 3 integers (RGB), each between %s and %s inclusive',
+                    self::MIN,
+                    self::MAX
+                )
+            );
         }
     }
 
@@ -38,7 +53,7 @@ final class Rectangle extends ItemContainer implements ItemInterface
     {
         $output = [];
 
-        $output[] = $indentation . "rect rgb({$this->red}, {$this->green}, {$this->blue})";
+        $output[] = $indentation . self::TYPE . ' rgb(' . implode(',', $this->colour) . ')';
         $output[] = $this->renderItems($this->items, $indentation);
         $output[] = $indentation . 'end';
 

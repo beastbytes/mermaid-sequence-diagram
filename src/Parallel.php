@@ -14,19 +14,4 @@ final class Parallel extends BlockContainer
     {
         return ($i === 0 ? 'par' : 'and');
     }
-
-    /** @internal
-    public function render(string $indentation): string
-    {
-        $output = [];
-
-        foreach ($this->blocks as $i => $block) {
-            $block->type = ($i === 0 ? 'par' : 'and');
-            $output[] = $block->render($indentation);
-        }
-
-        $output[] = $indentation . 'end';
-
-        return implode("\n", $output);
-    } */
 }
