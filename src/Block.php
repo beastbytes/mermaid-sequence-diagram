@@ -8,10 +8,12 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid\SequenceDiagram;
 
+use BeastBytes\Mermaid\CommentTrait;
 use BeastBytes\Mermaid\RenderItemsTrait;
 
 class Block extends ItemContainer
 {
+    use CommentTrait;
     use RenderItemsTrait;
 
     public function __construct(protected readonly string $description = '')
@@ -23,8 +25,9 @@ class Block extends ItemContainer
     {
         $output = [];
 
+        $this->renderComment($indentation, $output);
         $output[] = $indentation . $type . ($this->description === '' ? '' : ' ' . $this->description);
-        $output[] = $this->renderItems($this->items, $indentation);
+        $this->renderItems($this->items, $indentation, $output);
 
         return implode("\n", $output);
     }

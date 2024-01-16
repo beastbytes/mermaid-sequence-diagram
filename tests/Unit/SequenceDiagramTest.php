@@ -14,6 +14,8 @@ use BeastBytes\Mermaid\SequenceDiagram\Parallel;
 use BeastBytes\Mermaid\SequenceDiagram\Participant;
 use BeastBytes\Mermaid\SequenceDiagram\SequenceDiagram;
 
+defined('COMMENT') or define('COMMENT', 'comment');
+
 test('Sequence Diagram', function () {
     $alice = new Participant('A', 'Alice');
     $bob = new Participant('B', 'Bob');
@@ -88,9 +90,11 @@ test('Sequence Diagram', function () {
                         )
                 )
         )
+            ->withComment(COMMENT)
             ->render()
         )
         ->toBe("<pre class=\"mermaid\">\n"
+               . '%% ' . COMMENT . "\n"
                . "sequenceDiagram\n"
                . "  box rgb(32,87,244) Box\n"
                . "    participant _A as Alice\n"

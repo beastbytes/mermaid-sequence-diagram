@@ -8,12 +8,14 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid\SequenceDiagram;
 
+use BeastBytes\Mermaid\CommentTrait;
 use BeastBytes\Mermaid\Mermaid;
 use BeastBytes\Mermaid\MermaidInterface;
 use BeastBytes\Mermaid\RenderItemsTrait;
 
 final class SequenceDiagram extends ItemContainer implements MermaidInterface
 {
+    use CommentTrait;
     use RenderItemsTrait;
 
     private const TYPE = 'sequenceDiagram';
@@ -27,8 +29,9 @@ final class SequenceDiagram extends ItemContainer implements MermaidInterface
     {
         $output = [];
 
+        $this->renderComment('', $output);
         $output[] = self::TYPE;
-        $output[] = $this->renderItems($this->items, '');
+        $this->renderItems($this->items, '', $output);
 
         return Mermaid::render($output);
     }

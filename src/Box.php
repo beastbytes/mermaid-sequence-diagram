@@ -80,7 +80,7 @@ final class Box implements ItemInterface
             . ($this->colour === [] ? '' : ' rgb(' . implode(',', $this->colour) . ')')
             . ($this->description === '' ? '' : ' ' . $this->description)
         ;
-        $output[] = $this->renderItems($this->participants, $indentation);
+        $this->renderItems($this->participants, $indentation, $output);
         $output[] = $indentation . 'end';
 
         return implode("\n", $output);

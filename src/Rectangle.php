@@ -8,11 +8,13 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid\SequenceDiagram;
 
+use BeastBytes\Mermaid\CommentTrait;
 use BeastBytes\Mermaid\RenderItemsTrait;
 use InvalidArgumentException;
 
 final class Rectangle extends ItemContainer implements ItemInterface
 {
+    use CommentTrait;
     use RenderItemsTrait;
 
     private const TYPE = 'rect';
@@ -53,8 +55,9 @@ final class Rectangle extends ItemContainer implements ItemInterface
     {
         $output = [];
 
+        $this->renderComment($indentation, $output);
         $output[] = $indentation . self::TYPE . ' rgb(' . implode(',', $this->colour) . ')';
-        $output[] = $this->renderItems($this->items, $indentation);
+        $this->renderItems($this->items, $indentation, $output);
         $output[] = $indentation . 'end';
 
         return implode("\n", $output);

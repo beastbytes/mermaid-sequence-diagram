@@ -9,6 +9,8 @@ declare(strict_types=1);
 use BeastBytes\Mermaid\SequenceDiagram\Actor;
 use BeastBytes\Mermaid\SequenceDiagram\Participant;
 
+defined('COMMENT') or define('COMMENT', 'comment');
+
 test('Participant Test', function () {
     $alice = new Participant('Alice');
 
@@ -45,6 +47,15 @@ test('Actor with alias', function () {
         ->toBe('_A')
         ->and($alice->render(''))
         ->toBe('actor _A as Alice');
+});
+
+test('Actor with comment', function () {
+    $alice = (new Actor('A', 'Alice'))
+        ->withComment(COMMENT)
+    ;
+
+    expect($alice->render(''))
+        ->toBe('%% ' . COMMENT . "\nactor _A as Alice");
 });
 
 test('Activation Test', function () {

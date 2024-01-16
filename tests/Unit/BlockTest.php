@@ -13,6 +13,8 @@ use BeastBytes\Mermaid\SequenceDiagram\Message;
 use BeastBytes\Mermaid\SequenceDiagram\Optional;
 use BeastBytes\Mermaid\SequenceDiagram\Participant;
 
+defined('COMMENT') or define('COMMENT', 'comment');
+
 test('Break, Loop, Option Test', function (string $blockClass, string $blockType) {
     $alice = new Participant('Alice');
     $bob = new Participant('Bob');
@@ -33,16 +35,18 @@ test('Break, Loop, Option Test', function (string $blockClass, string $blockType
         )
     ;
 
-    $block = (new $blockClass('Description' ))
+    $block = (new $blockClass('Description'))
         ->withItem(
             new Message($alice, $bob, 'Message one', Arrow::DottedLine),
             new Message($bob, $alice, 'Message two', Arrow::DottedLine)
         )
+        ->withComment(COMMENT)
     ;
 
     expect($block->render(''))
         ->toBe(
-            $blockType . " Description\n"
+            '%% ' . COMMENT . "\n"
+            . $blockType . " Description\n"
             . "  _Alice-->_Bob: Message one\n"
             . "  _Bob-->_Alice: Message two\n"
             . 'end'
