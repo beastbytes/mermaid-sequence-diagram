@@ -10,7 +10,7 @@ use BeastBytes\Mermaid\SequenceDiagram\Arrow;
 use BeastBytes\Mermaid\SequenceDiagram\Breakk;
 use BeastBytes\Mermaid\SequenceDiagram\Loop;
 use BeastBytes\Mermaid\SequenceDiagram\Message;
-use BeastBytes\Mermaid\SequenceDiagram\Optional;
+use BeastBytes\Mermaid\SequenceDiagram\Opt;
 use BeastBytes\Mermaid\SequenceDiagram\Participant;
 
 defined('COMMENT') or define('COMMENT', 'comment');
@@ -56,6 +56,6 @@ test('Break, Loop, Option Test', function (string $blockClass, string $blockType
     ->with([
         [Breakk::class, 'break'],
         [Loop::class, 'loop'],
-        [Optional::class, 'opt'],
+        [Opt::class, 'opt'],
     ])
 ;

@@ -12,14 +12,9 @@ final class Breakk extends Block
 {
     protected const TYPE = 'break';
 
-    /** @internal */
-    public function render(string $indentation): string
+    public function __construct(string $description = '')
     {
-        $output = [];
-
-        $output[] = $this->renderBlock(self::TYPE, $indentation);
-        $output[] = $indentation . 'end';
-
-        return implode("\n", $output);
+        $this->type = self::TYPE;
+        parent::__construct($description);
     }
 }

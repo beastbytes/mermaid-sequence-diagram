@@ -8,11 +8,11 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid\SequenceDiagram;
 
-final class Loop extends Block
+final class Opt extends Block
 {
-    private const TYPE = 'loop';
+    private const TYPE = 'opt';
 
-    public function __construct(protected readonly string $description = '')
+    public function __construct(string $description = '')
     {
         $this->type = self::TYPE;
         parent::__construct($description);

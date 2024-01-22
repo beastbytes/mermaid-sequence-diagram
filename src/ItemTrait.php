@@ -8,10 +8,15 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid\SequenceDiagram;
 
-abstract class ItemContainer
+trait ItemTrait
 {
-    /** @psalm-var list<ItemInterface> $items */
+    /** @psalm-var ItemInterface $items */
     protected array $items = [];
+
+    protected function hasItems(): bool
+    {
+        return $this->items !== [];
+    }
 
     /** @psalm-suppress PropertyTypeCoercion */
     public function addItem(ItemInterface ...$item): self

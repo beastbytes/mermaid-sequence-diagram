@@ -11,24 +11,46 @@ namespace BeastBytes\Mermaid\SequenceDiagram;
 use BeastBytes\Mermaid\CommentTrait;
 use BeastBytes\Mermaid\RenderItemsTrait;
 
-class Block extends ItemContainer
+class Block implements ItemInterface
 {
     use CommentTrait;
+    use ItemTrait;
     use RenderItemsTrait;
 
-    public function __construct(protected readonly string $description = '')
+    public const BLOCK_END = true;
+
+    protected string $type = '';
+
+    public function __construct(private readonly string $description = '')
     {
     }
 
     /** @internal */
-    public function renderBlock(string $type, string $indentation): string
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /** @internal */
+    public function render(string $indentation): string
     {
         $output = [];
-
         $this->renderComment($indentation, $output);
-        $output[] = $indentation . $type . ($this->description === '' ? '' : ' ' . $this->description);
+        $this->renderBlock($indentation, $output, self::BLOCK_END);
+        return implode("\n", $output);
+    }
+
+    /* @internal */
+    public function renderBlock(string $indentation, array &$output, bool $end = false): void
+    {
+        $this->type .= ($this->description === '' ? '' : ' ' . $this->description);
+
+        $output[] = $indentation . $this->type;
         $this->renderItems($this->items, $indentation, $output);
 
-        return implode("\n", $output);
+        if ($end) {
+            $output[] = $indentation . 'end';
+        }
     }
 }

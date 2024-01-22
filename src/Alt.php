@@ -10,12 +10,13 @@ namespace BeastBytes\Mermaid\SequenceDiagram;
 
 use BeastBytes\Mermaid\CommentTrait;
 
-final class Critical implements ItemInterface
+final class Alt implements ItemInterface
 {
     use CommentTrait;
 
-    private const TYPE = ['critical', 'option'];
+    private const TYPE = ['alt', 'else'];
 
+    /** @var list<Block> $blocks */
     private array $blocks;
 
     public function __construct(Block ...$block)

@@ -12,10 +12,12 @@ use BeastBytes\Mermaid\CommentTrait;
 use BeastBytes\Mermaid\Mermaid;
 use BeastBytes\Mermaid\MermaidInterface;
 use BeastBytes\Mermaid\RenderItemsTrait;
+use Stringable;
 
-final class SequenceDiagram extends ItemContainer implements MermaidInterface
+final class SequenceDiagram implements MermaidInterface, Stringable
 {
     use CommentTrait;
+    use ItemTrait;
     use RenderItemsTrait;
 
     private const TYPE = 'sequenceDiagram';

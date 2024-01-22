@@ -79,7 +79,7 @@ test('Box with colour Test', function () {
 
     expect($box->render(''))
         ->toBe(
-            "box rgb(47,153,232)\n"
+            "box rgb(47, 153, 232)\n"
             . "  participant _Alice as Alice\n"
             . "  participant _Bob as Bob\n"
             . "end"
@@ -97,7 +97,7 @@ test('Box with description and colour Test', function () {
 
     expect($box->render(''))
         ->toBe(
-            "box rgb(47,153,232) Description\n"
+            "box rgb(47, 153, 232) Description\n"
             . "  participant _Alice as Alice\n"
             . "  participant _Bob as Bob\n"
             . "end"

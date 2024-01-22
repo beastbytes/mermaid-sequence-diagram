@@ -10,7 +10,7 @@ use BeastBytes\Mermaid\SequenceDiagram\Arrow;
 use BeastBytes\Mermaid\SequenceDiagram\Block;
 use BeastBytes\Mermaid\SequenceDiagram\Box;
 use BeastBytes\Mermaid\SequenceDiagram\Message;
-use BeastBytes\Mermaid\SequenceDiagram\Parallel;
+use BeastBytes\Mermaid\SequenceDiagram\Par;
 use BeastBytes\Mermaid\SequenceDiagram\Participant;
 use BeastBytes\Mermaid\SequenceDiagram\SequenceDiagram;
 
@@ -25,7 +25,7 @@ test('Sequence Diagram', function () {
 
     $diagram = (new SequenceDiagram())
         ->withItem(
-            (new Box('Box', [32,87,244]))
+            (new Box('Box', [32, 87, 244]))
                 ->withParticipant($alice, $bob)
             ,
             new Message($alice, $bob, 'Hello Bob', Arrow::SolidLineArrowhead),
@@ -36,7 +36,7 @@ test('Sequence Diagram', function () {
     expect($diagram->render())
         ->toBe("<pre class=\"mermaid\">\n"
                . "sequenceDiagram\n"
-               . "  box rgb(32,87,244) Box\n"
+               . "  box rgb(32, 87, 244) Box\n"
                . "    participant _A as Alice\n"
                . "    participant _B as Bob\n"
                . "  end\n"
@@ -46,49 +46,44 @@ test('Sequence Diagram', function () {
         )
         ->and($diagram->addItem(
             $caroline,$dave,$elizabeth,
-            (new Parallel())
-                ->withBlock(
-                    (new Block('Alice to Bob'))
-                        ->withItem(
-                            new Message($alice, $bob, 'Message AB', Arrow::SolidLineArrowhead)
-                        )
-                    ,
-                    (new Block('Alice to Caroline'))
-                        ->withItem(
-                            new Message($alice, $caroline, 'Message AC', Arrow::SolidLineArrowhead),
-                            (new Parallel())
-                                ->withBlock(
-                                    (new Block('Caroline to Dave'))
-                                        ->withItem(
-                                            new Message($caroline, $dave, 'Message CD', Arrow::SolidLineArrowhead)
-                                        )
-                                    ,
-                                    (new Block('Caroline to Elizabeth'))
-                                        ->withItem(
-                                            new Message($caroline, $elizabeth, 'Message CE', Arrow::SolidLineArrowhead),
-                                            (new Parallel())
-                                                ->withBlock(
-                                                    (new Block('Elizabeth to Dave'))
-                                                        ->withItem(
-                                                            new Message($elizabeth, $dave, 'Message ED', Arrow::SolidLineArrowhead)
-                                                        )
-                                                    ,
-                                                    (new Block('Elizabeth to Alice'))
-                                                        ->withItem(
-                                                            new Message($elizabeth, $alice, 'Message EA', Arrow::SolidLineArrowhead)
-                                                        )
-                                                )
-
-                                        )
-
+            (new Par(
+                (new Block('Alice to Bob'))
+                    ->withItem(
+                        new Message($alice, $bob, 'Message AB', Arrow::SolidLineArrowhead)
+                    )
+                ,
+                (new Block('Alice to Caroline'))
+                    ->withItem(
+                        new Message($alice, $caroline, 'Message AC', Arrow::SolidLineArrowhead),
+                        (new Par(
+                            (new Block('Caroline to Dave'))
+                                ->withItem(
+                                    new Message($caroline, $dave, 'Message CD', Arrow::SolidLineArrowhead)
                                 )
+                            ,
+                            (new Block('Caroline to Elizabeth'))
+                                ->withItem(
+                                    new Message($caroline, $elizabeth, 'Message CE', Arrow::SolidLineArrowhead),
+                                    (new Par(
+                                        (new Block('Elizabeth to Dave'))
+                                            ->withItem(
+                                                new Message($elizabeth, $dave, 'Message ED', Arrow::SolidLineArrowhead)
+                                            )
+                                        ,
+                                        (new Block('Elizabeth to Alice'))
+                                            ->withItem(
+                                                new Message($elizabeth, $alice, 'Message EA', Arrow::SolidLineArrowhead)
+                                            )
+                                    ))
+                                )
+                            ))
                         )
                     ,
                     (new Block('Alice to Dave'))
                         ->withItem(
                             new Message($alice, $dave, 'Message AD', Arrow::SolidLineArrowhead)
                         )
-                )
+                ))
         )
             ->withComment(COMMENT)
             ->render()
@@ -96,7 +91,7 @@ test('Sequence Diagram', function () {
         ->toBe("<pre class=\"mermaid\">\n"
                . '%% ' . COMMENT . "\n"
                . "sequenceDiagram\n"
-               . "  box rgb(32,87,244) Box\n"
+               . "  box rgb(32, 87, 244) Box\n"
                . "    participant _A as Alice\n"
                . "    participant _B as Bob\n"
                . "  end\n"
