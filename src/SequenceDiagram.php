@@ -27,7 +27,7 @@ final class SequenceDiagram implements MermaidInterface, Stringable
         return $this->render();
     }
 
-    public function render(): string
+    public function render(array $attributes = []): string
     {
         $output = [];
 
@@ -35,6 +35,6 @@ final class SequenceDiagram implements MermaidInterface, Stringable
         $output[] = self::TYPE;
         $this->renderItems($this->items, '', $output);
 
-        return Mermaid::render($output);
+        return Mermaid::render($output, $attributes);
     }
 }
